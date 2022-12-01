@@ -10,13 +10,19 @@ CONFIG += c++17
 
 SOURCES += \
     main.cpp \
-    gamewindow.cpp
+    gamewindow.cpp \
+    pausewindow.cpp \
+    startwindow.cpp
 
 HEADERS += \
-    gamewindow.h
+    gamewindow.h \
+    pausewindow.h \
+    startwindow.h
 
 FORMS += \
-    gamewindow.ui
+    gamewindow.ui \
+    pausewindow.ui \
+    startwindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
