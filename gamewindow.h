@@ -15,6 +15,10 @@ public:
     GameWindow(QWidget *parent = nullptr);
     ~GameWindow();
 
+private slots:
+    void on_help_btn_clicked();
+    void on_save_btn_clicked();
+
 private:
     Ui::GameWindow *ui;
 };

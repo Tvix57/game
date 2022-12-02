@@ -11,17 +11,19 @@ CONFIG += c++17
 SOURCES += \
     main.cpp \
     gamewindow.cpp \
-    pausewindow.cpp \
+    namewindow.cpp \
+    profilemanager.cpp \
     startwindow.cpp
 
 HEADERS += \
     gamewindow.h \
-    pausewindow.h \
+    namewindow.h \
+    profilemanager.h \
     startwindow.h
 
 FORMS += \
     gamewindow.ui \
-    pausewindow.ui \
+    namewindow.ui \
     startwindow.ui
 
 # Default rules for deployment.

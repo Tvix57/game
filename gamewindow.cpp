@@ -13,3 +13,11 @@ GameWindow::~GameWindow()
     delete ui;
 }
 
+
+void GameWindow::on_help_btn_clicked() {
+
+}
+
+void GameWindow::on_save_btn_clicked() {
+
+}
