@@ -12,14 +12,17 @@ class GameWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    GameWindow(QWidget *parent = nullptr);
+    GameWindow(QString player_name, int lvl = 0, QWidget *parent = nullptr);
     ~GameWindow();
 
 private slots:
     void on_help_btn_clicked();
     void on_save_btn_clicked();
-
+signals:
+    void saveGame(QString, int);
 private:
     Ui::GameWindow *ui;
+    QString player_name_;
+    int curent_lvl_;
 };
 #endif // GAMEWINDOW_H

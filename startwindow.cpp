@@ -13,13 +13,15 @@ StartWindow::~StartWindow() {
 }
 
 void StartWindow::on_play_btn_clicked() {
-    profile_->loadNewProfile();
-    this->hide();
+    if (profile_->loadNewProfile()) {
+        this->hide();
+    }
 }
 
 void StartWindow::on_load_btn_clicked() {
-    profile_->loadProfile();
-    this->hide();
+    if (profile_->loadProfile()) {
+        this->hide();
+    }
 }
 
 void StartWindow::on_exit_btn_clicked() {
