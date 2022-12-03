@@ -9,6 +9,7 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    gamearea.cpp \
     main.cpp \
     gamewindow.cpp \
     namewindow.cpp \
@@ -16,6 +17,7 @@ SOURCES += \
     startwindow.cpp
 
 HEADERS += \
+    gamearea.h \
     gamewindow.h \
     namewindow.h \
     profilemanager.h \

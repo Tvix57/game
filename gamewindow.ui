@@ -15,29 +15,6 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="4" column="0" colspan="2">
-     <widget class="QPushButton" name="save_btn">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="text">
-       <string>Save game</string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="0" rowspan="2" colspan="6">
-     <widget class="QLabel" name="label_2">
-      <property name="text">
-       <string>PlayArea</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
-     </widget>
-    </item>
     <item row="0" column="0" colspan="2">
      <widget class="QProgressBar" name="progressBar">
       <property name="sizePolicy">
@@ -73,16 +50,29 @@
       </property>
      </widget>
     </item>
-    <item row="0" column="4">
-     <widget class="QLabel" name="label_3">
+    <item row="4" column="4" colspan="2">
+     <widget class="QPushButton" name="help_btn">
       <property name="sizePolicy">
-       <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
       <property name="text">
-       <string>Lelel</string>
+       <string>Help</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="0" colspan="2">
+     <widget class="QPushButton" name="save_btn">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="text">
+       <string>Save game</string>
       </property>
      </widget>
     </item>
@@ -106,18 +96,21 @@
       </item>
      </layout>
     </item>
-    <item row="4" column="4" colspan="2">
-     <widget class="QPushButton" name="help_btn">
+    <item row="0" column="4">
+     <widget class="QLabel" name="label_3">
       <property name="sizePolicy">
-       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
       <property name="text">
-       <string>Help</string>
+       <string>Lelel</string>
       </property>
      </widget>
+    </item>
+    <item row="1" column="0" colspan="6">
+     <layout class="QGridLayout" name="gridLayout_2"/>
     </item>
    </layout>
   </widget>
@@ -127,7 +120,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>21</height>
+     <height>24</height>
     </rect>
    </property>
   </widget>
