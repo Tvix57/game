@@ -28,12 +28,14 @@ bool ProfileManager::loadProfile() {
         return false;
     } else {
         QInputDialog select_profile;
+        profile_list << "test1" << "test2" << "test3";
 //        select_profile.setInputMode()
         select_profile.setComboBoxItems(profile_list);
         select_profile.setComboBoxEditable(false);
         if (select_profile.exec() == QDialog::Accepted) {
 
-            QString player_name = select_profile.getItem(this->parent(), "Choose profile", profile_list);
+            QString player_name ;
+//            = select_profile.getItem(this->parent(), "Choose profile", profile_list);
 
             saved_profiles_.beginGroup(player_name);
             int lvl = saved_profiles_.value("lvl", 0).toInt();
