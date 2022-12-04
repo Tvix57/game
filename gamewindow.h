@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 
+#include "dbmanager.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class GameWindow; }
 QT_END_NAMESPACE
@@ -20,9 +22,11 @@ private slots:
     void on_save_btn_clicked();
 signals:
     void saveGame(QString, int);
+
 private:
     Ui::GameWindow *ui;
     QString player_name_;
     int curent_lvl_;
+//    DBManager db_manager_;
 };
 #endif // GAMEWINDOW_H

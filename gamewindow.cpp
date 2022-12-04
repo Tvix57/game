@@ -18,10 +18,10 @@ GameWindow::GameWindow(QString player_name, int lvl, QWidget *parent)
 //    painter.setCompositionMode(QPainter::CompositionMode_SourceIn);
 //    painter.fillRect(a.rect(), Qt::black);
 //    painter.end();
-
+//    db_manager_.GetImageWay(10);
     Gamearea *l1 = new Gamearea;
     l1->setWhatsThis("CROC");
-    QPixmap a("/Users/cresswec/Downloads/game/data/bear.png", "PNG");
+    QPixmap a(":/img/data/bear.png", "PNG");
     l1->setPixmap(a);
     Gamearea *l2 = new Gamearea;
     l2->setWhatsThis("MON");
