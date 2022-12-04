@@ -10,7 +10,11 @@
 class Gamearea : public QLabel
 {
     Q_OBJECT
+private:
+    QColor avg;
 public:
+    void setAvg(QColor avgin) {avg = avgin;}
+    QColor getAvg() {return avg;}
     explicit Gamearea(QWidget *parent = nullptr);
     void mouseReleaseEvent(QMouseEvent *) override;
 };

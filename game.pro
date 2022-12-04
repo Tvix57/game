@@ -2,7 +2,12 @@ QT       += core gui widgets
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-CONFIG += c++17
+CONFIG += c++17 file_copies
+
+COPIES += database
+
+database.files = $$files(data/image_DB.sqlite3)
+database.path = $$OUT_PWD
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
