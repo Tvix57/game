@@ -26,6 +26,7 @@ public:
     ~DBManager();
 
     QHash<int,QString> GetImageWay(int);
+    int GetMaxImage();
 private:
     bool MakeFileWay();
     QSqlDatabase db_;

@@ -14,7 +14,7 @@ class GameWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    GameWindow(QString player_name, int lvl = 0, QWidget *parent = nullptr);
+    GameWindow(QString player_name, int lvl = 1, QWidget *parent = nullptr);
     ~GameWindow();
 
 private slots:
@@ -29,9 +29,8 @@ private:
     QColor getAvgColor(QPixmap pixmap);
     Ui::GameWindow *ui;
     QString player_name_;
-    int curent_lvl_;
+    int current_lvl_;
     DBManager db_manager_;
-    int list_item_count_ = 0;
     int current_row_ = 0;
 };
 #endif // GAMEWINDOW_H

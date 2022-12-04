@@ -3,20 +3,39 @@
 #include "gamearea.h"
 
 #include <QPainter>
+#include <random>
 
 GameWindow::GameWindow(QString player_name, int lvl, QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::GameWindow)
     , player_name_{player_name}
-    , curent_lvl_{lvl}
+    , current_lvl_{lvl}
 {
     ui->setupUi(this);
     ui->level_lbl->setText(QString::number(lvl));
 
-    auto images = db_manager_.GetImageWay(2);
+    auto images = db_manager_.GetImageWay(0.1 * current_lvl_ * db_manager_.GetMaxImage());
     for (auto &it: images) {
         AddToMainList(it);
     }
+
+    QList<int> list;
+    while (list.size() < images.size() * 0.3) {
+        static std::random_device rd;
+        static std::default_random_engine generator(rd());
+        static std:: uniform_int_distribution<int> dist(0, images.size() - 1);
+        int random = dist(generator);
+        if (list.contains(random)) {
+            continue;
+        } else {
+            list.append(random);
+        }
+    }
+
+    for (auto &it: list) {
+        AddToItemList(images.values().at(it));
+    }
+
 }
 
 void GameWindow::AddToMainList(QString path) {
@@ -24,12 +43,24 @@ void GameWindow::AddToMainList(QString path) {
     label->setWhatsThis(QStringList(path.split("/")).last());
     label->setPixmap(QPixmap(path, "PNG"));
     label->setFixedSize(130,130);
-    if (list_item_count_ >= 2) {
-        current_row_++;
-        list_item_count_ = 0;
+
+    bool check = 0;
+    if (ui->gridLayout_2->count() < ui->gridLayout_2->rowCount()*ui->gridLayout_2->columnCount()) {
+        for (int i = 0; i < ui->gridLayout_2->rowCount(); ++i) {
+            for (int j = 0; j < ui->gridLayout_2->columnCount(); ++j) {
+                if (ui->gridLayout_2->itemAtPosition(i, j) == nullptr) {
+                    ui->gridLayout_2->addWidget(label, i, j);
+                    check = 1;
+                    break;
+                }
+             if (check) {
+                 break;
+             }
+            }
+        }
+    } else {
+        ui->gridLayout_2->addWidget(label, ui->gridLayout_2->rowCount(), ui->gridLayout_2->columnCount());
     }
-    ui->gridLayout_2->addWidget(label, current_row_, list_item_count_);
-    AddToItemList(path);
 }
 
 void GameWindow::AddToItemList(QString path) {
@@ -37,7 +68,7 @@ void GameWindow::AddToItemList(QString path) {
     QColor avg = getAvgColor(pixmap);
     QPainter painter(&pixmap);
     painter.setCompositionMode(QPainter::CompositionMode_SourceIn);
-    painter.fillRect(pixmap.rect(), avg);
+    painter.fillRect(pixmap.rect(), Qt::black );
     painter.end();
 
     Gamearea *label = new Gamearea;
@@ -47,7 +78,7 @@ void GameWindow::AddToItemList(QString path) {
     label->setPixmap(pixmap);
     label->setAvg(avg);
 
-    ui->item_area_layout->addWidget(label, list_item_count_++);
+    ui->item_area_layout->addWidget(label, ui->item_area_layout->count());
 }
 
 QColor GameWindow::getAvgColor(QPixmap pixmap) {
@@ -87,5 +118,5 @@ void GameWindow::on_help_btn_clicked() {
 }
 
 void GameWindow::on_save_btn_clicked() {
-    emit saveGame(player_name_,curent_lvl_);
+    emit saveGame(player_name_,current_lvl_);
 }

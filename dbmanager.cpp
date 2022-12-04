@@ -33,6 +33,21 @@ QHash<int,QString> DBManager::GetImageWay(int items_count) {
     return result;
 }
 
+int DBManager::GetMaxImage() {
+    QSqlQuery query(db_);
+    int result = 0;
+    query.prepare("SELECT COUNT(*) as count FROM images");
+    if (query.exec()) {
+        if (query.first()) {
+            QSqlRecord record_gr = query.record();
+            result = query.value(record_gr.indexOf("count")).toInt();
+        }
+    } else {
+        qDebug() << "Ошибка запроса" <<query.lastError();
+    }
+    return result;
+}
+
 bool DBManager::MakeFileWay() {
     file_path_ = QCoreApplication::applicationDirPath ();
     if (MACOS) {

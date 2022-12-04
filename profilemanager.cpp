@@ -38,7 +38,7 @@ bool ProfileManager::loadProfile() {
 //            = select_profile.getItem(this->parent(), "Choose profile", profile_list);
 
             saved_profiles_.beginGroup(player_name);
-            int lvl = saved_profiles_.value("lvl", 0).toInt();
+            int lvl = saved_profiles_.value("lvl", 1).toInt();
 
 //            GameWindow * game = new GameWindow(player_name, lvl);
 //            connect(game, SIGNAL(saveGame(QString, int)), this, SLOT(saveGame(QString, int)));
