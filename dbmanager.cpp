@@ -3,37 +3,40 @@
 DBManager::DBManager(QObject *parent)
     : QObject{parent},
       db_{QSqlDatabase::addDatabase("QSQLITE")} {
-    file_path_ = MakeFileWay();
-    if (!file_path_.isEmpty()) {
+    if (MakeFileWay()) {
       db_.setDatabaseName(file_path_);
         if (!db_.isOpen()) {
             if (!db_.open()) {
                 qDebug() << "База данных не открылась" << db_.lastError();
             }
         }
+    } else {
+        qDebug() << "Файл БД не найден." << db_.lastError();
     }
 }
 
-QStringList DBManager::GetImageWay(int items_count) {
-    QStringList result;
+QHash<int,QString> DBManager::GetImageWay(int items_count) {
+    QHash<int,QString> result;
     QSqlQuery query(db_);
-    query.prepare("SELECT img_way FROM items ");
-//    if (query.exec()) {
-//        if (query.first()) {
-//            QSqlRecord record_gr = query.record();
-//            result. = query.value(record_gr.indexOf("img_way")).toString();
-//        }
-//    }
+    query.prepare("SELECT * FROM images ORDER BY RANDOM() LIMIT " + QString::number(items_count));
+    if (query.exec()) {
+        if (query.first()) {
+            QSqlRecord record_gr = query.record();
+            result.insert(query.value(record_gr.indexOf("img_id")).toInt(),
+                          query.value(record_gr.indexOf("img_way")).toString());
+        }
+    }
     return result;
 }
 
-QString DBManager::MakeFileWay() {
-//    file_path_ {QCoreApplication::applicationDirPath () +
-//                QString("/image_DB.sqlite")};
+bool DBManager::MakeFileWay() {
+    file_path_ = {QCoreApplication::applicationDirPath () +
+                QString("/image_DB.sqlite")};
     QFileInfo checkFile(file_path_);
     if (!checkFile.isFile()) {
-      file_path_  = QCoreApplication::applicationDirPath () + QString("/../image_DB.sqlite");
-      checkFile.setFile(file_path_);
+        return true;
+    } else {
+        return false;
     }
 }
 

@@ -27,6 +27,6 @@ private:
     Ui::GameWindow *ui;
     QString player_name_;
     int curent_lvl_;
-//    DBManager db_manager_;
+    DBManager db_manager_;
 };
 #endif // GAMEWINDOW_H

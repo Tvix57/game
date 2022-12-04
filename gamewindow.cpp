@@ -18,7 +18,7 @@ GameWindow::GameWindow(QString player_name, int lvl, QWidget *parent)
 //    painter.setCompositionMode(QPainter::CompositionMode_SourceIn);
 //    painter.fillRect(a.rect(), Qt::black);
 //    painter.end();
-//    db_manager_.GetImageWay(10);
+    db_manager_.GetImageWay(2);
     Gamearea *l1 = new Gamearea;
     l1->setWhatsThis("CROC");
     QPixmap a(":/img/data/bear.png", "PNG");

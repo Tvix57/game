@@ -17,9 +17,9 @@ public:
     explicit DBManager(QObject *parent = nullptr);
     ~DBManager();
 
-    QStringList GetImageWay(int);
+    QHash<int,QString> GetImageWay(int);
 private:
-    QString MakeFileWay();
+    bool MakeFileWay();
     QSqlDatabase db_;
     QString file_path_;
 };
