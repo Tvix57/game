@@ -25,6 +25,7 @@ private:
     QString player_name_;
     int curent_lvl_;
     int list_item_count_ = 0;
+    int current_row_ = 0;
     void AddToMainList(QString path);
     void AddToItemList(QString path);
     QColor getAvgColor(QPixmap pixmap);

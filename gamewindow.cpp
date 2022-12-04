@@ -13,35 +13,28 @@ GameWindow::GameWindow(QString player_name, int lvl, QWidget *parent)
     ui->setupUi(this);
     ui->level_lbl->setText(QString::number(lvl));
 
-//    QPixmap a("/Users/cresswec/Downloads/game/data/pngwing.com.png", "PNG");
-//    QPainter painter(&a);
-//    painter.setCompositionMode(QPainter::CompositionMode_SourceIn);
-//    painter.fillRect(a.rect(), Qt::black);
-//    painter.end();
-
-    Gamearea *l1 = new Gamearea;
-    l1->setWhatsThis("CROC");
-    QPixmap a("/Users/cresswec/Downloads/game/data/bear.png", "PNG");
-    l1->setPixmap(a);
-    l1->setFixedSize(130,130);
-    Gamearea *l2 = new Gamearea;
-    l2->setWhatsThis("MON");
-    l2->setFixedSize(130, 130);
-    QPixmap b("/Users/cresswec/Downloads/game/data/bird.png", "PNG");
-    l2->setPixmap(b);
-
-    ui->gridLayout_2->addWidget(l1, 0, 0);
-    ui->gridLayout_2->addWidget(l2, 0, 1);
-
-    AddToItemList("/Users/cresswec/Downloads/game/data/crocodile2.png");
-    AddToItemList("/Users/cresswec/Downloads/game/data/bird.png");
+    AddToMainList("/Users/cresswec/Downloads/game/data/bear.png");
+    AddToMainList("/Users/cresswec/Downloads/game/data/beaver.png");
+    AddToMainList("/Users/cresswec/Downloads/game/data/bird.png");
+    AddToMainList("/Users/cresswec/Downloads/game/data/bird2.png");
+    AddToMainList("/Users/cresswec/Downloads/game/data/bird3.png");
+    AddToMainList("/Users/cresswec/Downloads/game/data/bull.png");
+    AddToMainList("/Users/cresswec/Downloads/game/data/camel.png");
+    AddToMainList("/Users/cresswec/Downloads/game/data/cat.png");
+    AddToMainList("/Users/cresswec/Downloads/game/data/cow.png");
 }
 
 void GameWindow::AddToMainList(QString path) {
     Gamearea *label  = new Gamearea;
+    label->setWhatsThis(QStringList(path.split("/")).last());
     label->setPixmap(QPixmap(path, "PNG"));
     label->setFixedSize(130,130);
-//    ui->gridLayout_2->addWidget(label, );
+    if (list_item_count_ >= 2) {
+        current_row_++;
+        list_item_count_ = 0;
+    }
+    ui->gridLayout_2->addWidget(label, current_row_, list_item_count_);
+    AddToItemList(path);
 }
 
 void GameWindow::AddToItemList(QString path) {
@@ -53,6 +46,7 @@ void GameWindow::AddToItemList(QString path) {
     painter.end();
 
     Gamearea *label = new Gamearea;
+    label->setWhatsThis(QStringList(path.split("/")).last());
     label->setFixedSize(130,130);
 
     label->setPixmap(pixmap);

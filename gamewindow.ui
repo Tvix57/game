@@ -21,28 +21,6 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0" colspan="2">
-     <widget class="QProgressBar" name="progressBar">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="value">
-       <number>0</number>
-      </property>
-      <property name="textVisible">
-       <bool>false</bool>
-      </property>
-      <property name="invertedAppearance">
-       <bool>false</bool>
-      </property>
-      <property name="textDirection">
-       <enum>QProgressBar::TopToBottom</enum>
-      </property>
-     </widget>
-    </item>
     <item row="0" column="5">
      <widget class="QLabel" name="level_lbl">
       <property name="sizePolicy">
@@ -91,15 +69,44 @@
        </sizepolicy>
       </property>
       <property name="text">
-       <string>Lelel</string>
+       <string>Level</string>
       </property>
      </widget>
     </item>
     <item row="1" column="0" colspan="6">
      <layout class="QGridLayout" name="gridLayout_2"/>
     </item>
-    <item row="4" column="2" colspan="2">
-     <layout class="QHBoxLayout" name="item_area_layout"/>
+    <item row="4" column="2">
+     <layout class="QHBoxLayout" name="item_area_layout">
+      <property name="sizeConstraint">
+       <enum>QLayout::SetMinimumSize</enum>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+     </layout>
+    </item>
+    <item row="0" column="0" colspan="3">
+     <widget class="QProgressBar" name="progressBar">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="value">
+       <number>0</number>
+      </property>
+      <property name="textVisible">
+       <bool>false</bool>
+      </property>
+      <property name="invertedAppearance">
+       <bool>false</bool>
+      </property>
+      <property name="textDirection">
+       <enum>QProgressBar::TopToBottom</enum>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>
