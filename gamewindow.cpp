@@ -13,15 +13,10 @@ GameWindow::GameWindow(QString player_name, int lvl, QWidget *parent)
     ui->setupUi(this);
     ui->level_lbl->setText(QString::number(lvl));
 
-    AddToMainList("/Users/cresswec/Downloads/game/data/bear.png");
-    AddToMainList("/Users/cresswec/Downloads/game/data/beaver.png");
-    AddToMainList("/Users/cresswec/Downloads/game/data/bird.png");
-    AddToMainList("/Users/cresswec/Downloads/game/data/bird2.png");
-    AddToMainList("/Users/cresswec/Downloads/game/data/bird3.png");
-    AddToMainList("/Users/cresswec/Downloads/game/data/bull.png");
-    AddToMainList("/Users/cresswec/Downloads/game/data/camel.png");
-    AddToMainList("/Users/cresswec/Downloads/game/data/cat.png");
-    AddToMainList("/Users/cresswec/Downloads/game/data/cow.png");
+    auto images = db_manager_.GetImageWay(2);
+    for (auto &it: images) {
+        AddToMainList(it);
+    }
 }
 
 void GameWindow::AddToMainList(QString path) {
