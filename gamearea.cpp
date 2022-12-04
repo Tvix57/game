@@ -10,6 +10,5 @@ void Gamearea::mouseReleaseEvent(QMouseEvent *event) {
     QMessageBox a;
     a.setText(this->whatsThis());
     a.exec();
-//    qDebug() << event->x() << event->y();
 }
 

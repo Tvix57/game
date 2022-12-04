@@ -10,6 +10,14 @@
 #include <QApplication>
 #include <QFileInfo>
 
+
+
+#ifdef __APPLE__
+#define MACOS true
+#else
+#define MACOS false
+#endif
+
 class DBManager : public QObject
 {
     Q_OBJECT

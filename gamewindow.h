@@ -24,9 +24,14 @@ signals:
     void saveGame(QString, int);
 
 private:
+    void AddToMainList(QString path);
+    void AddToItemList(QString path);
+    QColor getAvgColor(QPixmap pixmap);
     Ui::GameWindow *ui;
     QString player_name_;
     int curent_lvl_;
     DBManager db_manager_;
+    int list_item_count_ = 0;
+
 };
 #endif // GAMEWINDOW_H

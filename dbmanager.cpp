@@ -21,19 +21,30 @@ QHash<int,QString> DBManager::GetImageWay(int items_count) {
     query.prepare("SELECT * FROM images ORDER BY RANDOM() LIMIT " + QString::number(items_count));
     if (query.exec()) {
         if (query.first()) {
-            QSqlRecord record_gr = query.record();
-            result.insert(query.value(record_gr.indexOf("img_id")).toInt(),
-                          query.value(record_gr.indexOf("img_way")).toString());
+            for (; query.isValid(); query.next()) {
+                QSqlRecord record_gr = query.record();
+                result.insert(query.value(record_gr.indexOf("img_id")).toInt(),
+                              query.value(record_gr.indexOf("img_way")).toString());
+            }
         }
+    } else {
+        qDebug() << "Ошибка запроса" <<query.lastError();
     }
     return result;
 }
 
 bool DBManager::MakeFileWay() {
-    file_path_ = {QCoreApplication::applicationDirPath () +
-                QString("/image_DB.sqlite")};
+    file_path_ = QCoreApplication::applicationDirPath ();
+    if (MACOS) {
+        file_path_.truncate(file_path_.indexOf(".app"));
+        file_path_.truncate(file_path_.lastIndexOf("/"));
+        file_path_ += "/";
+    } else {
+        file_path_ += "\\";
+    }
+    file_path_ += "image_DB.sqlite3";
     QFileInfo checkFile(file_path_);
-    if (!checkFile.isFile()) {
+    if (checkFile.isFile()) {
         return true;
     } else {
         return false;
