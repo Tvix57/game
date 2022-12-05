@@ -13,30 +13,7 @@ GameWindow::GameWindow(QString player_name, int lvl, QWidget *parent)
     , current_lvl_{lvl}
 {
     ui->setupUi(this);
-    ui->level_lbl->setText(QString::number(lvl));
-
-    auto images = db_manager_.GetImageWay(0.1 * current_lvl_ * db_manager_.GetMaxImage());
-    for (auto &it: images) {
-        AddToMainList(it);
-    }
-
-    QList<int> list;
-    while (list.size() < images.size() * 0.3) {
-        static std::random_device rd;
-        static std::default_random_engine generator(rd());
-        static std:: uniform_int_distribution<int> dist(0, images.size() - 1);
-        int random = dist(generator);
-        if (list.contains(random)) {
-            continue;
-        } else {
-            list.append(random);
-        }
-    }
-
-    for (auto &it: list) {
-        AddToItemList(images.values().at(it));
-    }
-    ui->progressBar->setMaximum(list.size());
+    LoadNewLVL();
 }
 
 void GameWindow::AddToMainList(QString path) {
@@ -83,6 +60,32 @@ void GameWindow::AddToItemList(QString path) {
     ui->item_area_layout->addWidget(label, ui->item_area_layout->count());
 }
 
+void GameWindow::LoadNewLVL() {
+    ui->level_lbl->setText(QString::number(current_lvl_));
+    auto images = db_manager_.GetImageWay(0.1 * current_lvl_ * db_manager_.GetMaxImage());
+    for (auto &it: images) {
+        AddToMainList(it);
+    }
+    QList<int> list;
+    while (list.size() < images.size() * 0.3) {
+        static std::random_device rd;
+        static std::default_random_engine generator(rd());
+        static std::uniform_int_distribution<int> dist(0, images.size() - 1);
+        int random = dist(generator);
+        if (list.contains(random)) {
+            continue;
+        } else {
+            list.append(random);
+        }
+    }
+
+    for (auto &it: list) {
+        AddToItemList(images.values().at(it));
+    }
+    ui->progressBar->setValue(0);
+    ui->progressBar->setMaximum(list.size());
+}
+
 QColor GameWindow::getAvgColor(QPixmap pixmap) {
     int count = 0;
     QImage image = pixmap.toImage();
@@ -115,7 +118,7 @@ GameWindow::~GameWindow() {
 }
 
 void GameWindow::on_help_btn_clicked() {
-    Gamearea *item = static_cast<Gamearea *>(ui->item_area_layout->itemAt(0)->widget());
+    Gamearea *item = static_cast<Gamearea *>(ui->item_area_layout->itemAt(curent_item_)->widget());
     QPixmap pixmap(*item->pixmap());
     QPainter painter(&pixmap);
     painter.setCompositionMode(QPainter::CompositionMode_SourceIn);
@@ -130,20 +133,33 @@ void GameWindow::on_save_btn_clicked() {
 }
 
 bool GameWindow::RemoveImg(QString item_name) {
-    QString cur_find_name = ui->item_area_layout->itemAt(0)->widget()->whatsThis();
-    if (item_name == cur_find_name) {
+    auto * cur_find = static_cast<Gamearea *>(ui->item_area_layout->itemAt(curent_item_)->widget());
+    if (cur_find && item_name == cur_find->whatsThis()) {
         for (int i = 0; i < ui->gridLayout_2->rowCount(); ++i) {
             for (int j = 0; j < ui->gridLayout_2->columnCount(); ++j) {
-                QWidget * cur_widget = ui->gridLayout_2->itemAtPosition(i,j)->widget();
-                if (cur_widget && cur_widget->whatsThis() == item_name) {
-                    ui->gridLayout_2->removeWidget(cur_widget);
-                    ui->item_area_layout->removeWidget(cur_widget);
-                    ui->progressBar->setValue(ui->progressBar->value()+1);
-                    this->repaint();
-                    return true;
+                auto * cur_widget_grid = ui->gridLayout_2->itemAtPosition(i,j);
+                if (cur_widget_grid) {
+                    Gamearea * cur_widget = static_cast<Gamearea *> (cur_widget_grid->widget());
+                    if (cur_widget->whatsThis() == item_name) {
+                        ui->progressBar->setValue(ui->progressBar->value()+1);
+                        cur_find->hide();
+                        cur_widget->hide();
+                        ++curent_item_;
+                        this->repaint();
+                        return true;
+                    }
                 }
+
             }
         }
     }
     return false;
+}
+
+void GameWindow::on_progressBar_valueChanged(int value) {
+    if (value == ui->progressBar->maximum()) {
+        ++current_lvl_;
+        curent_item_ = 0;
+        LoadNewLVL();
+    }
 }
