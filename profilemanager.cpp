@@ -31,10 +31,11 @@ bool ProfileManager::loadProfile() {
         bool ok;
         QString player_name = QInputDialog::getItem(nullptr, tr("QInputDialog::getItem()"),
                                              tr("Select profile:"), profile_list, 0, false, &ok);
+
         if (ok && !player_name.isEmpty()) {
             saved_profiles_.beginGroup(player_name);
             int lvl = saved_profiles_.value("lvl", 1).toInt();
-
+            saved_profiles_.endGroup();
             GameWindow * game = new GameWindow(player_name, lvl);
             connect(game, SIGNAL(saveGame(QString, int)), this, SLOT(saveGame(QString, int)));
             game->show();
@@ -47,7 +48,6 @@ bool ProfileManager::loadProfile() {
 
 void ProfileManager::saveGame(QString profile_name, int lvl) {
     saved_profiles_.beginGroup(profile_name);
-    qDebug() << profile_name << lvl;
     saved_profiles_.setValue("lvl", lvl);
     saved_profiles_.endGroup();
 }
