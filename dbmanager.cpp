@@ -57,7 +57,10 @@ bool DBManager::MakeFileWay() {
     } else {
         file_path_ += "/../";
     }
+        
     file_path_ += "image_DB.sqlite3";
+
+    qDebug() << file_path_;
     QFileInfo checkFile(file_path_);
     if (checkFile.isFile()) {
         return true;
