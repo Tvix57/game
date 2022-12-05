@@ -31,12 +31,13 @@ private:
     void AddToMainList(QString path);
     void AddToItemList(QString path);
     void LoadNewLVL();
+    void ShowCurrent();
     QColor getAvgColor(QPixmap pixmap);
     Ui::GameWindow *ui;
     QString player_name_;
     int current_lvl_;
     DBManager db_manager_;
     int curent_item_ = 0;
-    QWidget * find_pool_;
+    int layout_pos_ = 0;
 };
 #endif // GAMEWINDOW_H
