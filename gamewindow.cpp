@@ -114,7 +114,14 @@ GameWindow::~GameWindow() {
 
 
 void GameWindow::on_help_btn_clicked() {
-    ui->item_area_layout->itemAt(0);
+    Gamearea *item = static_cast<Gamearea *>(ui->item_area_layout->itemAt(0)->widget());
+    QPixmap pixmap(*item->pixmap());
+    QPainter painter(&pixmap);
+    painter.setCompositionMode(QPainter::CompositionMode_SourceIn);
+    painter.fillRect(pixmap.rect(), item->getAvg());
+    painter.end();
+
+    item->setPixmap(pixmap);
 }
 
 void GameWindow::on_save_btn_clicked() {

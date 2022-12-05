@@ -2,6 +2,7 @@
 #define GAMEWINDOW_H
 
 #include <QMainWindow>
+#include <QtMath>
 
 #include "dbmanager.h"
 
@@ -31,6 +32,5 @@ private:
     QString player_name_;
     int current_lvl_;
     DBManager db_manager_;
-    int current_row_ = 0;
 };
 #endif // GAMEWINDOW_H

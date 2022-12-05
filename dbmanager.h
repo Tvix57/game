@@ -9,13 +9,16 @@
 #include <QSqlQuery>
 #include <QApplication>
 #include <QFileInfo>
+#include <QDebug>
 
 
 
 #ifdef __APPLE__
-#define MACOS true
+#define MACOS 0
+#elif __linux__
+#define MACOS 1
 #else
-#define MACOS false
+#define MACOS 2
 #endif
 
 class DBManager : public QObject
