@@ -1,15 +1,16 @@
 #include "profilemanager.h"
 #include "gamewindow.h"
+#include <QDir>
 
 ProfileManager::ProfileManager(QObject *parent) : QObject(parent),
                             saved_profiles_{"Study_work", "FindeItems.v1"} {}
 
 bool ProfileManager::loadNewProfile() {
-    QInputDialog dialog_new_name;
-    dialog_new_name.setInputMode(QInputDialog::InputMode::TextInput);
-    dialog_new_name.setTextValue("Enter the name");
-    if (dialog_new_name.exec() == QDialog::Accepted) {
-        QString profile_name;
+    bool ok;
+    QString profile_name = QInputDialog::getText(nullptr, tr("QInputDialog::getText()"),
+                                                   tr("User name:"), QLineEdit::Normal,
+                                                   QDir::home().dirName(), &ok);
+    if (ok && !profile_name.isEmpty()) {
         GameWindow * game = new GameWindow(profile_name);
         connect(game, SIGNAL(saveGame(QString, int)), this, SLOT(saveGame(QString, int)));
         game->show();
@@ -27,31 +28,26 @@ bool ProfileManager::loadProfile() {
         message.exec();
         return false;
     } else {
-        QInputDialog select_profile;
-        profile_list << "test1" << "test2" << "test3";
-//        select_profile.setInputMode()
-        select_profile.setComboBoxItems(profile_list);
-        select_profile.setComboBoxEditable(false);
-        if (select_profile.exec() == QDialog::Accepted) {
-
-            QString player_name ;
-//            = select_profile.getItem(this->parent(), "Choose profile", profile_list);
-
+        bool ok;
+        QString player_name = QInputDialog::getItem(nullptr, tr("QInputDialog::getItem()"),
+                                             tr("Select profile:"), profile_list, 0, false, &ok);
+        if (ok && !player_name.isEmpty()) {
             saved_profiles_.beginGroup(player_name);
             int lvl = saved_profiles_.value("lvl", 1).toInt();
 
-//            GameWindow * game = new GameWindow(player_name, lvl);
-//            connect(game, SIGNAL(saveGame(QString, int)), this, SLOT(saveGame(QString, int)));
-//            game->show();
+            GameWindow * game = new GameWindow(player_name, lvl);
+            connect(game, SIGNAL(saveGame(QString, int)), this, SLOT(saveGame(QString, int)));
+            game->show();
             return true;
-        } else if (select_profile.exec() == QDialog::Rejected) {
-
-          return false;
+        } else {
+            return false;
         }
     }
 }
 
 void ProfileManager::saveGame(QString profile_name, int lvl) {
     saved_profiles_.beginGroup(profile_name);
+    qDebug() << profile_name << lvl;
     saved_profiles_.setValue("lvl", lvl);
+    saved_profiles_.endGroup();
 }
