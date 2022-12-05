@@ -37,5 +37,6 @@ private:
     int current_lvl_;
     DBManager db_manager_;
     int curent_item_ = 0;
+    QWidget * find_pool_;
 };
 #endif // GAMEWINDOW_H
