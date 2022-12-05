@@ -2,6 +2,7 @@
 #include "ui_gamewindow.h"
 #include "gamearea.h"
 
+#include <QtMath>
 #include <QPainter>
 #include <random>
 
@@ -43,6 +44,7 @@ void GameWindow::AddToMainList(QString path) {
     label->setWhatsThis(QStringList(path.split("/")).last());
     label->setPixmap(QPixmap(path, "PNG"));
     label->setFixedSize(130,130);
+    connect(label, SIGNAL(ItemName(QString)), this, SLOT(RemoveImg(QString)));
 
     bool check = 0;
     if (ui->gridLayout_2->count() < ui->gridLayout_2->rowCount()*ui->gridLayout_2->columnCount()) {
@@ -119,4 +121,20 @@ void GameWindow::on_help_btn_clicked() {
 
 void GameWindow::on_save_btn_clicked() {
     emit saveGame(player_name_,current_lvl_);
+}
+
+bool GameWindow::RemoveImg(QString item_name) {
+    QString cur_find_name = ui->item_area_layout->itemAt(0)->widget()->whatsThis();
+    if (item_name == cur_find_name) {
+        for (int i = 0; i < ui->gridLayout_2->rowCount(); ++i) {
+            for (int j = 0; j < ui->gridLayout_2->columnCount(); ++j) {
+                QWidget * cur_widget = ui->gridLayout_2->itemAtPosition(i,j)->widget();
+                if (cur_widget->whatsThis() == item_name) {
+                    ui->gridLayout_2->removeWidget(cur_widget);
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
 }

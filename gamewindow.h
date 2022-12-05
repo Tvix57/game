@@ -20,6 +20,7 @@ public:
 private slots:
     void on_help_btn_clicked();
     void on_save_btn_clicked();
+    bool RemoveImg(QString);
 signals:
     void saveGame(QString, int);
 

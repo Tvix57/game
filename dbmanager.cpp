@@ -7,11 +7,11 @@ DBManager::DBManager(QObject *parent)
       db_.setDatabaseName(file_path_);
         if (!db_.isOpen()) {
             if (!db_.open()) {
-                qDebug() << "База данных не открылась" << db_.lastError();
+//                qDebug() << "База данных не открылась" << db_.lastError();
             }
         }
     } else {
-        qDebug() << "Файл БД не найден." << db_.lastError();
+//        qDebug() << "Файл БД не найден." << db_.lastError();
     }
 }
 
@@ -28,7 +28,7 @@ QHash<int,QString> DBManager::GetImageWay(int items_count) {
             }
         }
     } else {
-        qDebug() << "Ошибка запроса" <<query.lastError();
+//        qDebug() << "Ошибка запроса" <<query.lastError();
     }
     return result;
 }
@@ -43,7 +43,7 @@ int DBManager::GetMaxImage() {
             result = query.value(record_gr.indexOf("count")).toInt();
         }
     } else {
-        qDebug() << "Ошибка запроса" <<query.lastError();
+//        qDebug() << "Ошибка запроса" <<query.lastError();
     }
     return result;
 }
@@ -55,7 +55,7 @@ bool DBManager::MakeFileWay() {
         file_path_.truncate(file_path_.lastIndexOf("/"));
         file_path_ += "/";
     } else {
-        file_path_ += "\\";
+        file_path_ += "/../";
     }
     file_path_ += "image_DB.sqlite3";
     QFileInfo checkFile(file_path_);

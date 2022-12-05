@@ -8,6 +8,21 @@ COPIES += database
 
 database.files = $$files(data/image_DB.sqlite3)
 database.path = $$OUT_PWD
+#win32 {
+
+
+#CONFIG(debug, debug|release) {
+#    TARGET = LPSEngined
+#    TYPE = debug
+#    database.path +=/debug/
+#} else {
+#    database.path +=/release/
+#}
+#}
+#macx {
+#    database.path = $$OUT_PWD
+#}
+
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
