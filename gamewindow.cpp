@@ -36,7 +36,7 @@ GameWindow::GameWindow(QString player_name, int lvl, QWidget *parent)
     for (auto &it: list) {
         AddToItemList(images.values().at(it));
     }
-
+    ui->progressBar->setMaximum(list.size());
 }
 
 void GameWindow::AddToMainList(QString path) {
@@ -114,7 +114,6 @@ GameWindow::~GameWindow() {
     delete ui;
 }
 
-
 void GameWindow::on_help_btn_clicked() {
     Gamearea *item = static_cast<Gamearea *>(ui->item_area_layout->itemAt(0)->widget());
     QPixmap pixmap(*item->pixmap());
@@ -136,8 +135,11 @@ bool GameWindow::RemoveImg(QString item_name) {
         for (int i = 0; i < ui->gridLayout_2->rowCount(); ++i) {
             for (int j = 0; j < ui->gridLayout_2->columnCount(); ++j) {
                 QWidget * cur_widget = ui->gridLayout_2->itemAtPosition(i,j)->widget();
-                if (cur_widget->whatsThis() == item_name) {
+                if (cur_widget && cur_widget->whatsThis() == item_name) {
                     ui->gridLayout_2->removeWidget(cur_widget);
+                    ui->item_area_layout->removeWidget(cur_widget);
+                    ui->progressBar->setValue(ui->progressBar->value()+1);
+                    this->repaint();
                     return true;
                 }
             }

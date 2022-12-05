@@ -50,17 +50,20 @@ int DBManager::GetMaxImage() {
 
 bool DBManager::MakeFileWay() {
     file_path_ = QCoreApplication::applicationDirPath ();
+
     if (MACOS) {
+    if (MACOS == 0) {
         file_path_.truncate(file_path_.indexOf(".app"));
         file_path_.truncate(file_path_.lastIndexOf("/"));
         file_path_ += "/";
-    } else {
+    } else if (MACOS == 2) {
         file_path_ += "/../";
+    } else {
+        file_path_ += "\\/";
+        file_path_ += "image_DB.sqlite3";
     }
-        
+    }
     file_path_ += "image_DB.sqlite3";
-
-    qDebug() << file_path_;
     QFileInfo checkFile(file_path_);
     if (checkFile.isFile()) {
         return true;
